@@ -29,7 +29,8 @@ def view_all_complaints():
     cur = connection.cursor()
     cur.execute("SELECT * FROM complaints")
     all_complaints = cur.fetchall()
-    print(all_complaints)
+    for complaint in all_complaints:
+        print(complaint)
     cur.close()
     connection.close()
 
@@ -44,10 +45,10 @@ def delete_complaint():
     connection.commit()
     cur.close()
     connection.close()
-    print(f"Your complaint with id number: {id_number} was deleted succesfully!")
+    print(f"Your complaint with id number: {id_number} was deleted successfully!")
+
 
 def mark_as_resolved():
-
 
     id_number = int(input())
     updated_status_complaint = "Resolved!"
