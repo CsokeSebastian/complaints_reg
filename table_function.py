@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 def add_new_complaint():
+    """Adds a new complaint to database"""
 
     complaint = input("Enter your complaint:\n")
     complainant = input("Enter your name:\n")
@@ -24,6 +25,7 @@ def add_new_complaint():
 
 
 def view_all_complaints():
+    """Shows all the complaints"""
 
     connection = sqlite3.connect("complaints.db")
     cur = connection.cursor()
@@ -36,6 +38,7 @@ def view_all_complaints():
 
 
 def delete_complaint():
+    """Deletes a complaint after a specified Id number"""
 
     id_number = int(input())
     connection = sqlite3.connect("complaints.db")
@@ -49,6 +52,7 @@ def delete_complaint():
 
 
 def mark_as_resolved():
+    """Marks a complaint as Resolved after a specified Id number"""
 
     id_number = int(input())
     updated_status_complaint = "Resolved!"
@@ -65,6 +69,7 @@ def mark_as_resolved():
 
 
 def unresolved_complaints():
+    """Show you the unresolved complaints"""
 
     resolved = "In progress."
     connection = sqlite3.connect("complaints.db")

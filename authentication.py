@@ -3,6 +3,7 @@ IS_ADMIN_LOGGED_IN = False
 
 
 def add_admin():
+    """Adds a new Admin"""
 
     username = input("Enter your Username:")
     password = input("Enter your Password:")
@@ -20,6 +21,8 @@ def add_admin():
 
 
 def log_in(username, password):
+    """Checks if the username and password exist in database and
+    logs in the Admin"""
 
     connection = sqlite3.connect("user.db")
     cur = connection.cursor()
@@ -34,6 +37,8 @@ def log_in(username, password):
 
 
 def must_log_in():
+    """Asks for username and password and return True  
+    if found or False if not"""
 
     global IS_ADMIN_LOGGED_IN
     if IS_ADMIN_LOGGED_IN:
@@ -49,6 +54,7 @@ def must_log_in():
 
 
 def log_out():
+    """Logs out the Admin"""
     
     global IS_ADMIN_LOGGED_IN
     if IS_ADMIN_LOGGED_IN:
