@@ -11,7 +11,7 @@ ADD_ADMIN = 4
 VIEW_ALL = 5
 VIEW_UNRESOLVED = 6
 CHANGE_STATUS_COMPLAINT = 7
-DELETE_COMPLAINT = 8
+# DELETE_COMPLAINT = 8
 IS_ADMIN_LOGGED_IN = False
 
 
@@ -45,10 +45,10 @@ while True:
                         ComplaintsMessages.mark_as_resolved_message()
                         mark_as_resolved()
                         continue
-                    elif option_admin == DELETE_COMPLAINT:
-                        ComplaintsMessages.del_complaint_message()
-                        delete_complaint()
-                        continue
+                    # elif option_admin == DELETE_COMPLAINT:
+                    #     ComplaintsMessages.del_complaint_message()
+                    #     delete_complaint()
+                    #     continue
                     elif option_admin == LOG_OUT:
                         AdminMessages.log_out_message()
                         AdminMessages.goodbye_message()
@@ -59,8 +59,11 @@ while True:
         elif option == ADD_COMPLAINT:
             ComplaintsMessages.add_new_complaint_message()
             add_new_complaint()
+            ComplaintsMessages.done_add_new_complaint_message()
+
         elif option == EXIT:
             exit()
     except ValueError:
         print("Enter a valid option!")
-    
+
+
