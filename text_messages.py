@@ -1,4 +1,5 @@
 class IntroMessages:
+    """Has the welcome and option message."""
 
     @staticmethod
     def intro_message():
@@ -22,10 +23,12 @@ class IntroMessages:
                 "5 = View all complaints\n"
                 "6 = View the unresolved complaints\n"
                 "7 = Change the status for a complaint\n"
-                "8 = Delete complaint\n")
+                # "8 = Delete complaint\n"
+                )
 
 
 class AdminMessages:
+    "Has all the Admin messages"
 
     @staticmethod
     def log_in_message():
@@ -49,6 +52,11 @@ class AdminMessages:
 
 
 class ComplaintsMessages:
+    """Has all the complaints function messages."""
+
+    @staticmethod
+    def done_add_new_complaint_message():
+        print("Your complaint was added!")
     
     @staticmethod
     def view_all_message():
@@ -58,10 +66,10 @@ class ComplaintsMessages:
     def add_new_complaint_message():
         print("Here you can add a new complaint:")
 
-    @staticmethod
-    def del_complaint_message():
-        print("Enter the id number of the complaint that you want to delete:\n"
-                "But remember, once you delete it, you can't undo it!")
+    # @staticmethod
+    # def del_complaint_message():
+    #     print("Enter the id number of the complaint that you want to delete:\n"
+    #             "But remember, once you delete it, you can't undo it!")
 
     @staticmethod
     def mark_as_resolved_message():
