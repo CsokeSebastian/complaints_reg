@@ -3,11 +3,15 @@ from datetime import datetime
 
 
 def add_new_complaint():
-    """Adds a new complaint to database"""
+    """Adds a new complaint to database.
+    Accepts two inputs: - complaint
+                        - complainant.
+    Adds the date and time.
+    Adds status."""
 
     complaint = input("Enter your complaint:\n")
     complainant = input("Enter your name:\n")
-    current_datetime = datetime.now()
+    current_datetime = datetime.now().strftime("%Y-%m-%d, %H:%M")
     resolved = "In progress."
     connection = sqlite3.connect("complaints.db")
     cur = connection.cursor()
@@ -36,40 +40,60 @@ def view_all_complaints():
     cur.close()
     connection.close()
 
+##### working on
 
-def delete_complaint():
-    """Deletes a complaint after a specified Id number"""
-
-    id_number = int(input())
-    connection = sqlite3.connect("complaints.db")
-    cur = connection.cursor()
-    complaint_delete = ("DELETE FROM complaints WHERE id=?")
-    cur.execute(complaint_delete, (id_number,))
-    connection.commit()
-    cur.close()
-    connection.close()
-    print(f"Your complaint with id number: {id_number} was deleted successfully!")
-
+# def delete_complaint():
+#     """Deletes a complaint after a specified Id number"""
+#     view_all_complaints()
+#     while True:
+#         print("Enter the Id number: \n")
+#         id_number = int(input())
+#         try:
+#             connection = sqlite3.connect("complaints.db")
+#             cur = connection.cursor()
+#             all_complaints = ("DELETE FROM complaints WHERE Id=?", (id_number,))
+#             cur.execute(all_complaints)
+#             connection.commit()
+#             for row in all_complaints:
+#                 if id_number not in row:
+#                     print("Id number doesn't exist")
+#                     cur.close()
+#                     connection.close()
+#                     return False
+#                 else:
+#                     print(f"Your complaint with id number: {id_number} was deleted successfully!")
+#                     cur.close()
+#                     connection.close()
+#                     return True
+#         except ValueError:
+#             print("Enter a number!")
+#             return False
+    
+   
 
 def mark_as_resolved():
-    """Marks a complaint as Resolved after a specified Id number"""
-
-    id_number = int(input())
-    updated_status_complaint = "Resolved!"
-    connection = sqlite3.connect("complaints.db")
-    cur = connection.cursor()
-    resolved_status ="""UPDATE Complaints
-                                        SET Resolved = ?
-                                        WHERE id = ?"""
-    cur.execute(resolved_status, (updated_status_complaint, id_number))
-    connection.commit()
-    cur.close()
-    connection.close()
-    print(f"Your complaint with Id number {id_number} was marked as resolved!")
-
+    """Marks a complaint as Resolved after a specified Id number
+    Accept one input: - id_number.
+    Updates the status of a complaint."""
+    
+    try:
+        id_number = int(input())
+        updated_status_complaint = "Resolved!"
+        connection = sqlite3.connect("complaints.db")
+        cur = connection.cursor()
+        resolved_status ="""UPDATE Complaints
+                                            SET Resolved = ?
+                                            WHERE id = ?"""
+        cur.execute(resolved_status, (updated_status_complaint, id_number))
+        connection.commit()
+        cur.close()
+        connection.close()
+        print(f"Your complaint with Id number {id_number} was marked as resolved!")
+    except ValueError:
+        print("Enter a existing Id number!")
 
 def unresolved_complaints():
-    """Show you the unresolved complaints"""
+    """Shows you the unresolved complaints"""
 
     resolved = "In progress."
     connection = sqlite3.connect("complaints.db")
