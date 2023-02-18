@@ -3,10 +3,13 @@ IS_ADMIN_LOGGED_IN = False
 
 
 def add_admin():
-    """Adds a new Admin"""
+    """Adds a new Admin
+    Accepts two inputs: - Username
+                       - Password
+    Puts the date in the database."""
 
-    username = input("Enter your Username:")
-    password = input("Enter your Password:")
+    username = input("Enter Username:")
+    password = input("Enter Password:")
     connection = sqlite3.connect("user.db")
     cur = connection.cursor()
     table_user = """ CREATE TABLE IF NOT EXISTS
@@ -14,15 +17,16 @@ def add_admin():
     cur.execute(table_user)
     cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
     cur.execute("SELECT * FROM users")
-    print(cur.fetchall())
     connection.commit()
     cur.close()
     connection.close()
 
 
 def log_in(username, password):
-    """Checks if the username and password exist in database and
-    logs in the Admin"""
+    """Checks if the Username and Password exist in database and
+    logs in the Admin.
+    Accepts two inputs: - Username
+                       - Password"""
 
     connection = sqlite3.connect("user.db")
     cur = connection.cursor()
