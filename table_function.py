@@ -2,15 +2,15 @@ import sqlite3
 from datetime import datetime
 
 
-def add_new_complaint():
+def add_new_complaint(complaint, complainant):
     """Adds a new complaint to database.
     Accepts two inputs: - complaint
                         - complainant.
     Adds the date and time.
     Adds status."""
 
-    complaint = input("Enter your complaint:\n")
-    complainant = input("Enter your name:\n")
+    # complaint = input("Enter your complaint:\n")
+    # complainant = input("Enter your name:\n")
     current_datetime = datetime.now().strftime("%Y-%m-%d, %H:%M")
     resolved = "In progress."
     connection = sqlite3.connect("complaints.db")
