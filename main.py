@@ -45,10 +45,6 @@ while True:
                         ComplaintsMessages.mark_as_resolved_message()
                         mark_as_resolved()
                         continue
-                    # elif option_admin == DELETE_COMPLAINT:
-                    #     ComplaintsMessages.del_complaint_message()
-                    #     delete_complaint()
-                    #     continue
                     elif option_admin == LOG_OUT:
                         AdminMessages.log_out_message()
                         AdminMessages.goodbye_message()

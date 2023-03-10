@@ -56,7 +56,7 @@ class ComplaintsMessages:
 
     @staticmethod
     def done_add_new_complaint_message():
-        print("Your complaint was added!")
+        print("Your complaint was added!\n")
     
     @staticmethod
     def view_all_message():
@@ -65,11 +65,6 @@ class ComplaintsMessages:
     @staticmethod
     def add_new_complaint_message():
         print("Here you can add a new complaint:")
-
-    # @staticmethod
-    # def del_complaint_message():
-    #     print("Enter the id number of the complaint that you want to delete:\n"
-    #             "But remember, once you delete it, you can't undo it!")
 
     @staticmethod
     def mark_as_resolved_message():

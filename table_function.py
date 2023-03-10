@@ -2,15 +2,15 @@ import sqlite3
 from datetime import datetime
 
 
-def add_new_complaint(complaint, complainant):
+def add_new_complaint():
     """Adds a new complaint to database.
     Accepts two inputs: - complaint
                         - complainant.
     Adds the date and time.
     Adds status."""
 
-    # complaint = input("Enter your complaint:\n")
-    # complainant = input("Enter your name:\n")
+    complaint = input("Enter your complaint:\n")
+    complainant = input("Enter your name:\n")
     current_datetime = datetime.now().strftime("%Y-%m-%d, %H:%M")
     resolved = "In progress."
     connection = sqlite3.connect("complaints.db")
@@ -39,36 +39,6 @@ def view_all_complaints():
         print(complaint)
     cur.close()
     connection.close()
-
-##### working on
-
-# def delete_complaint():
-#     """Deletes a complaint after a specified Id number"""
-#     view_all_complaints()
-#     while True:
-#         print("Enter the Id number: \n")
-#         id_number = int(input())
-#         try:
-#             connection = sqlite3.connect("complaints.db")
-#             cur = connection.cursor()
-#             all_complaints = ("DELETE FROM complaints WHERE Id=?", (id_number,))
-#             cur.execute(all_complaints)
-#             connection.commit()
-#             for row in all_complaints:
-#                 if id_number not in row:
-#                     print("Id number doesn't exist")
-#                     cur.close()
-#                     connection.close()
-#                     return False
-#                 else:
-#                     print(f"Your complaint with id number: {id_number} was deleted successfully!")
-#                     cur.close()
-#                     connection.close()
-#                     return True
-#         except ValueError:
-#             print("Enter a number!")
-#             return False
-    
    
 
 def mark_as_resolved():

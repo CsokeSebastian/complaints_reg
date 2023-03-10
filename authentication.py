@@ -15,12 +15,20 @@ def add_admin():
     table_user = """ CREATE TABLE IF NOT EXISTS
                 users(User TEXT, Password TEXT) """         
     cur.execute(table_user)
-    cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
     cur.execute("SELECT * FROM users")
-    connection.commit()
+    user = cur.fetchall()
+    
+    for row in user:
+        if username not in row:
+            cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+            connection.commit()
+            print(f"{username} added successfully!")
+        else:
+            return "Username exists."
+    
     cur.close()
     connection.close()
-
+    
 
 def log_in(username, password):
     """Checks if the Username and Password exist in database and
@@ -51,6 +59,7 @@ def must_log_in():
         username = input("Username: \n")
         password = input("Password: \n")
         if log_in(username, password):
+            print("You are logged in!")
             return True
         else:
             print("Try again, username/password incorrect!")
