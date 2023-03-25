@@ -1,5 +1,7 @@
 import sqlite3
-IS_ADMIN_LOGGED_IN = False
+import pwinput
+
+is_admin_logged_in = False
 
 
 def add_admin():
@@ -8,8 +10,8 @@ def add_admin():
                        - Password
     Puts the date in the database."""
 
-    username = input("Enter Username:")
-    password = input("Enter Password:")
+    username = input("Enter Username: ")
+    password = pwinput.pwinput(prompt="Enter Password: ", mask="*")
     connection = sqlite3.connect("user.db")
     cur = connection.cursor()
     table_user = """ CREATE TABLE IF NOT EXISTS
@@ -17,15 +19,19 @@ def add_admin():
     cur.execute(table_user)
     cur.execute("SELECT * FROM users")
     user = cur.fetchall()
-    
+    user_name = False
+
     for row in user:
-        if username not in row:
-            cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
-            connection.commit()
-            print(f"{username} added successfully!")
-        else:
-            return "Username exists."
-    
+        if username in row:
+            user_name = True
+
+    if user_name == True:
+        print("Username already exists. Please select a different Username!")
+    else:
+        cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+        connection.commit()
+        print(f"{username} added successfully!")
+        
     cur.close()
     connection.close()
     
@@ -52,14 +58,13 @@ def must_log_in():
     """Asks for username and password and return True  
     if found or False if not"""
 
-    global IS_ADMIN_LOGGED_IN
-    if IS_ADMIN_LOGGED_IN:
+    global is_admin_logged_in
+    if is_admin_logged_in:
         return True
     else:
         username = input("Username: \n")
-        password = input("Password: \n")
+        password = pwinput.pwinput(prompt="Password: \n", mask="*" )
         if log_in(username, password):
-            print("You are logged in!")
             return True
         else:
             print("Try again, username/password incorrect!")
@@ -69,6 +74,6 @@ def must_log_in():
 def log_out():
     """Logs out the Admin"""
     
-    global IS_ADMIN_LOGGED_IN
-    if IS_ADMIN_LOGGED_IN:
+    global is_admin_logged_in
+    if is_admin_logged_in:
         return False
