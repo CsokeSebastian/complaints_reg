@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import pandas as pd
 
 
 def add_new_complaint():
@@ -33,10 +34,7 @@ def view_all_complaints():
 
     connection = sqlite3.connect("complaints.db")
     cur = connection.cursor()
-    cur.execute("SELECT * FROM complaints")
-    all_complaints = cur.fetchall()
-    for complaint in all_complaints:
-        print(complaint)
+    print(pd.read_sql_query("""SELECT * FROM complaints""", connection))
     cur.close()
     connection.close()
    
@@ -51,28 +49,35 @@ def mark_as_resolved():
         updated_status_complaint = "Resolved!"
         connection = sqlite3.connect("complaints.db")
         cur = connection.cursor()
-        resolved_status ="""UPDATE Complaints
-                                            SET Resolved = ?
-                                            WHERE id = ?"""
-        cur.execute(resolved_status, (updated_status_complaint, id_number))
+        id_exists = False
+        cur.execute("SELECT * FROM complaints")
+        id_table = cur.fetchall()
+        for id in id_table:
+            if id_number in id:
+                id_exists = True
+            
+        if id_exists == True:
+            resolved_status = """UPDATE Complaints
+                                                SET Resolved = ?
+                                                WHERE Id = ?"""
+            cur.execute(resolved_status, (updated_status_complaint, id_number))
+            print(f"Your complaint with Id number {id_number} was marked as resolved!")
+        else:
+            print("The Id number that you have entered doesn't exists!")
         connection.commit()
         cur.close()
         connection.close()
-        print(f"Your complaint with Id number {id_number} was marked as resolved!")
+        
     except ValueError:
         print("Enter a existing Id number!")
+
 
 def unresolved_complaints():
     """Shows you the unresolved complaints"""
 
-    resolved = "In progress."
     connection = sqlite3.connect("complaints.db")
     cur = connection.cursor()
-    not_yet_resolved_complaints = ("""SELECT * FROM Complaints WHERE Resolved = ?""")
-    cur.execute(not_yet_resolved_complaints, (resolved,))
-    connection.commit()
-    for row in cur:
-        if resolved:
-            print(row)
+    not_yet_resolved_complaints = pd.read_sql_query("""SELECT * FROM Complaints WHERE Resolved = 'In progress.'""", connection)
+    print(not_yet_resolved_complaints)
     cur.close()
     connection.close()
